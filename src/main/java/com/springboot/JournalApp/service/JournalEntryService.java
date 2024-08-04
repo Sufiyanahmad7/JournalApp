@@ -16,6 +16,7 @@ public class JournalEntryService {
     private JournalEntryRepository journalEntryRepository;
 
     public void saveEntry(JournalEntry journalEntry) {
+        
         journalEntryRepository.save(journalEntry);
     }
 

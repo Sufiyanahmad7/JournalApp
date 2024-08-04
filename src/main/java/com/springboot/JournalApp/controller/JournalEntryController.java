@@ -1,27 +1,33 @@
 package com.springboot.JournalApp.controller;
 
 import com.springboot.JournalApp.entity.JournalEntry;
+import com.springboot.JournalApp.entity.User;
+import com.springboot.JournalApp.repository.UserRepository;
 import com.springboot.JournalApp.service.JournalEntryService;
+import com.springboot.JournalApp.service.UserService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
 @RestController
-@RequestMapping("/Journal")
-public class JournalEntryControllerV2 {
+@RequestMapping("/journal")
+public class JournalEntryController {
 
     @Autowired
     private JournalEntryService journalEntryService;
 
-    @GetMapping
-    public ResponseEntity<?> getAll() {
-        List<JournalEntry> all = journalEntryService.getAll();
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("{userName}")
+    public ResponseEntity<?> getAllJournalEntriesOfUserName(@PathVariable String userName) {
+        User user = userService.findByUserName(userName);
+        List<JournalEntry> all = user.getJournalEntries();
         if (all != null && !all.isEmpty()) {
             return new ResponseEntity<>(all, HttpStatus.OK);
         } else return new ResponseEntity<>(all, HttpStatus.NOT_FOUND);
