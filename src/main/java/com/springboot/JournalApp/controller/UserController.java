@@ -19,10 +19,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping
-    public List<User> getAll(){
-        return userService.getAll();
-    }
 
     @PostMapping
     public void createUser(@RequestBody User user){
