@@ -20,12 +20,20 @@ public class UserService {
 
     private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public void saveEntry(User user) {
-    user.setPassword(passwordEncoder.encode(user.getPassword()));
-    user.setRoles(Arrays.asList("USER"));
-        userRepository.save(user);
-    }
+    public void saveNewEntry(User user) {
+        try {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setRoles(Arrays.asList("USER"));
+            userRepository.save(user);
+        }catch (Exception e){
+            System.err.println("Error saving user: " + e.getMessage());
+            e.printStackTrace();
+        }
 
+    }
+ public void saveUser(User user){
+        userRepository.save(user);
+ }
     public List<User> getAll() {
         return userRepository.findAll();
     }
