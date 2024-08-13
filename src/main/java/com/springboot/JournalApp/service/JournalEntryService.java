@@ -30,7 +30,6 @@ public class JournalEntryService {
             user.getJournalEntries().add(saved);
             userService.saveUser(user);
         }catch (Exception e) {
-
             throw new RuntimeException("something has gone wrong while saving", e);
         }
     }

@@ -31,7 +31,9 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
         User userInDb = userService.findByUserName(userName);
-//        if (userInDb != null) {
+        if (userInDb == null) {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
             userInDb.setUserName(user.getUserName());
             userInDb.setPassword(user.getPassword());
             userService.saveNewEntry(userInDb);
