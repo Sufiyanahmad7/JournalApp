@@ -4,7 +4,6 @@ import com.springboot.JournalApp.entity.User;
 import com.springboot.JournalApp.repository.UserRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -21,19 +20,25 @@ public class UserService {
 
     private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public void saveNewEntry(User user) {
-        try {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setRoles(Arrays.asList("USER"));
-            userRepository.save(user);
-        }catch (DataIntegrityViolationException e) {
-            throw new RuntimeException("Username already exists");
-        }catch (Exception e){
-            System.err.println("Error saving user: " + e.getMessage());
-            throw new RuntimeException("Error saving user: " + e.getMessage());
-//            e.printStackTrace();
-        }
+    public void saveNewUser(User user) {
+//        try {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(Arrays.asList("USER"));
+        userRepository.save(user);
+//        }catch (DataIntegrityViolationException e) {
+//            throw new RuntimeException("Username already exists");
+//        }catch (Exception e){
+//            System.err.println("Error saving user: " + e.getMessage());
+//            throw new RuntimeException("Error saving user: " + e.getMessage());
+////            e.printStackTrace();
+//        }
 
+    }
+
+    public void saveAdmin(User user){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(Arrays.asList("USER", "ADMIN"));
+        userRepository.save(user);
     }
  public void saveUser(User user){
         userRepository.save(user);
