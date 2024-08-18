@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/public")
 public class PublicController {
 
-
     @Autowired
     private UserService userService;
 
@@ -20,16 +19,15 @@ public class PublicController {
         return "ok";
 
     }
-        @PostMapping("/create-user")
-        public ResponseEntity<String> createUser(@RequestBody User user) {
-            try {
-                userService.saveNewUser(user);
-                return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
-            } catch (Exception e) {
-                return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.BAD_REQUEST);
-            }
-//        public void createUser(@RequestBody User user){
-//
-//            userService.saveNewEntry(user);
+
+    @PostMapping("/create-user")
+    public ResponseEntity<?> createUser(@RequestBody User user) {
+        try {
+            userService.saveNewUser(user);
+            return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
     }
 }
