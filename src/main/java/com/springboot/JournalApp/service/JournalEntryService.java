@@ -62,7 +62,7 @@ public class JournalEntryService {
         }
         return removed;
     }
-//    public List<JournalEntry> findByUserName(String userName){
-//    return findByUserName(userName);
-//    }
+    public List<JournalEntry> findByUserName(String userName){
+    return findByUserName(userName);
+    }
 }
